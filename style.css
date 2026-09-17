@@ -119,3 +119,36 @@ button:disabled {
   gap: 4px;
 }
 
+#status {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #38bdf8;
+  min-height: 18px;
+}
+
+.canvas-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+canvas {
+  width: 100%;
+  max-width: 600px;
+  background: #09101f;
+  border-radius: 8px;
+  border: 1px solid #334155;
+}
+
+pre {
+  background: #09101f;
+  color: #38bdf8;
+  padding: 12px;
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 13px;
+  max-height: 160px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+  margin: 0;
+}
