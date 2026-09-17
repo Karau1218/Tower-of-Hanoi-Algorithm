@@ -30,3 +30,35 @@ async function initPython() {
     console.error(err);
   }
 }
+
+initPython();
+
+function getCanvasContext() {
+  const canvas = document.getElementById("hanoiCanvas");
+  return { canvas, ctx: canvas.getContext("2d") };
+}
+
+function drawState(state, totalDisks) {
+  const { canvas, ctx } = getCanvasContext();
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  const baseWidth = 540;
+  const baseY = 240;
+  const rodWidth = 8;
+  const rodHeight = 150;
+  const pegX = [120, 300, 480];
+
+  // Draw Base
+  ctx.fillStyle = "#64748b";
+  ctx.fillRect((canvas.width - baseWidth) / 2, baseY, baseWidth, 12);
+
+  // Draw 3 Rods (A, B, C)
+  ctx.fillStyle = "#94a3b8";
+  pegX.forEach((x, index) => {
+    ctx.fillRect(x - rodWidth / 2, baseY - rodHeight, rodWidth, rodHeight);
+    ctx.fillStyle = "#cbd5e1";
+    ctx.font = "bold 13px sans-serif";
+    ctx.textAlign = "center";
+    ctx.fillText(["A", "B", "C"][index], x, baseY + 26);
+    ctx.fillStyle = "#94a3b8";
+  });
