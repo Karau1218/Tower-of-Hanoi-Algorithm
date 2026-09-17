@@ -114,3 +114,22 @@ async function runSolver() {
 
   stepLoop(n);
 }
+
+function stepLoop(totalDisks) {
+  if (currentStepIndex >= animationSteps.length) {
+    document.getElementById("pauseBtn").disabled = true;
+    return;
+  }
+
+  drawState(animationSteps[currentStepIndex], totalDisks);
+  document.getElementById("currentMove").innerText = currentStepIndex;
+
+  const speed = 1050 - parseInt(document.getElementById("speedSlider").value, 10);
+
+  animationTimer = setTimeout(() => {
+    if (!isPaused) {
+      currentStepIndex++;
+      stepLoop(totalDisks);
+    }
+  }, speed);
+}
