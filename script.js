@@ -133,3 +133,32 @@ function stepLoop(totalDisks) {
     }
   }, speed);
 }
+
+function togglePause() {
+  const btn = document.getElementById("pauseBtn");
+  const n = parseInt(document.getElementById("diskCount").value, 10);
+  if (isPaused) {
+    isPaused = false;
+    btn.innerText = "Pause";
+    stepLoop(n);
+  } else {
+    isPaused = true;
+    btn.innerText = "Resume";
+    clearTimeout(animationTimer);
+  }
+}
+
+function stopAnimation() {
+  clearTimeout(animationTimer);
+  isPaused = false;
+}
+
+function resetVisualizer() {
+  stopAnimation();
+  const n = parseInt(document.getElementById("diskCount").value, 10) || 3;
+  const initialA = Array.from({ length: n }, (_, i) => n - i);
+  drawState([initialA, [], []], n);
+  document.getElementById("totalMoves").innerText = Math.pow(2, n) - 1;
+  document.getElementById("currentMove").innerText = "0";
+  document.getElementById("pauseBtn").disabled = true;
+}
