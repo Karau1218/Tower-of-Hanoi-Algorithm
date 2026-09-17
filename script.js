@@ -88,3 +88,29 @@ function drawState(state, totalDisks) {
     });
   });
 }
+
+async function runSolver() {
+  if (!pyodideInstance) return;
+  stopAnimation();
+
+  const n = parseInt(document.getElementById("diskCount").value, 10);
+  if (isNaN(n) || n < 1 || n > 8) return;
+
+  // Run curriculum string output
+  const rawLog = await pyodideInstance.runPythonAsync(`hanoi_solver(${n})`);
+  document.getElementById("outputLog").innerText = rawLog;
+
+  // Get structural snapshots for animation
+  const stepsJson = await pyodideInstance.runPythonAsync(`get_hanoi_steps(${n})`);
+  animationSteps = JSON.parse(stepsJson);
+
+  document.getElementById("totalMoves").innerText = animationSteps.length - 1;
+  document.getElementById("currentMove").innerText = "0";
+
+  currentStepIndex = 0;
+  isPaused = false;
+  document.getElementById("pauseBtn").disabled = false;
+  document.getElementById("pauseBtn").innerText = "Pause";
+
+  stepLoop(n);
+}
