@@ -62,3 +62,29 @@ function drawState(state, totalDisks) {
     ctx.fillText(["A", "B", "C"][index], x, baseY + 26);
     ctx.fillStyle = "#94a3b8";
   });
+
+  // Draw Disks
+  const maxDiskWidth = 140;
+  const minDiskWidth = 36;
+  const diskHeight = Math.min(20, Math.floor(120 / Math.max(totalDisks, 1)));
+
+  state.forEach((rod, pegIdx) => {
+    rod.forEach((diskVal, diskIdx) => {
+      const diskW = minDiskWidth + (diskVal - 1) * ((maxDiskWidth - minDiskWidth) / Math.max(totalDisks - 1, 1));
+      const x = pegX[pegIdx] - diskW / 2;
+      const y = baseY - (diskIdx + 1) * (diskHeight + 2);
+
+      ctx.fillStyle = diskColors[(diskVal - 1) % diskColors.length];
+      ctx.beginPath();
+      ctx.roundRect(x, y, diskW, diskHeight, 4);
+      ctx.fill();
+
+      // Disk Number
+      ctx.fillStyle = "#ffffff";
+      ctx.font = "10px sans-serif";
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillText(diskVal, pegX[pegIdx], y + diskHeight / 2);
+    });
+  });
+}
